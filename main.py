@@ -35,19 +35,19 @@ bot = Client(
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n➨ I am Txt to Video Uploader Bot.\n\n➨ Bot Made By Tushar.\n\n➨ For Use Me Send /𝘁𝘂𝘀𝗵𝗮𝗿 Command.\n\n➨ And Follow Few Steps.\n\n➨ Use /𝘀𝘁𝗼𝗽 Command For Stopping Ongoing Procces.</b>")
+    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n➨ I am Txt to Video Uploader Bot.\n\n➨ Bot Made By THE BOY\n\n➨ For Use Me Send /BOYS Command.\n\n➨ And Follow Few Steps.\n\n➨ Use /𝘀𝘁𝗼𝗽 Command For Stopping Ongoing Procces.</b>")
 
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
-    await m.reply_text("**𝗦𝘁𝗼𝗽𝗽𝗲𝗱**🚦", True)
+    await m.reply_text("**BAND**💗", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
 
-@bot.on_message(filters.command(["tushar"]))
+@bot.on_message(filters.command(["BOYS"]))
 async def upload(bot: Client, m: Message):
-    editable = await m.reply_text('⚡️𝗦𝗘𝗡𝗗 𝗧𝗫𝗧 𝗙𝗜𝗟𝗘⚡️')
+    editable = await m.reply_text('𝗦𝗘𝗡𝗗 𝗧𝗫𝗧')
     input: Message = await bot.listen(editable.chat.id)
     x = await input.download()
     await input.delete(True)
