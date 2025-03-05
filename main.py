@@ -1,49 +1,26 @@
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
-
 import os
 import re
 import sys
-import json
 import time
-import asyncio
 import requests
-import subprocess
-
-import core as helper
-from utils import progress_bar
-from vars import API_ID, API_HASH, BOT_TOKEN
 from aiohttp import ClientSession
-from pyromod import listen
-from subprocess import getstatusoutput
-
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram.errors import FloodWait
-from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
-from pyrogram.types.messages_and_media import message
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+API_ID = 'your_api_id'
+API_HASH = 'your_api_hash'
+BOT_TOKEN = 'your_bot_token'
 
-bot = Client(
-    "bot",
-    api_id=API_ID,
-    api_hash=API_HASH,
-    bot_token=BOT_TOKEN)
-
+bot = Client("bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n➨ I am Txt to Video Uploader Bot.\n\n➨ Bot Made By THE BOY\n\n➨ For Use Me Send /BOYS Command.\n\n➨ And Follow Few Steps.\n\n➨ Use /𝘀𝘁𝗼𝗽 Command For Stopping Ongoing Procces.</b>")
-
+    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n➨ I am Txt to Video Uploader Bot.\n\n➨ Bot Made By THE BOY\n\n➨ For Use Me Send /BOYS Command.\n\n➨ And Follow Few Steps.\n\n➨ Use /stop Command For Stopping Ongoing Process.</b>")
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
     await m.reply_text("**BAND**💗", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
-
-
 
 @bot.on_message(filters.command(["BOYS"]))
 async def upload(bot: Client, m: Message):
@@ -55,20 +32,18 @@ async def upload(bot: Client, m: Message):
     path = f"./downloads/{m.chat.id}"
 
     try:
-       with open(x, "r") as f:
-           content = f.read()
-       content = content.split("\n")
-       links = []
-       for i in content:
-           links.append(i.split("://", 1))
-       os.remove(x)
-            # print(len(links)
+        with open(x, "r") as f:
+            content = f.read()
+        content = content.split("\n")
+        links = []
+        for i in content:
+            links.append(i.split("://", 1))
+        os.remove(x)
     except:
-           await m.reply_text("**👩‍🎓𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗳𝗶𝗹𝗲 𝗶𝗻𝗽𝘂𝘁.**")
-           os.remove(x)
-           return
-    
-   
+        await m.reply_text("**👩‍🎓𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗳𝗶𝗹𝗲 𝗶𝗻𝗽𝘂𝘁.**")
+        os.remove(x)
+        return
+
     await editable.edit(f"**𝗧𝗼𝘁𝗮𝗹 𝗟𝗶𝗻𝗸𝘀 𝗙𝗼𝘂𝗻𝗱 𝗔𝗿𝗲🔗🔗** **{len(links)}**\n\n**𝗦𝗲𝗻𝗱 𝗙𝗿𝗼𝗺 𝗪𝗵𝗲𝗿𝗲 𝗬𝗼𝘂 𝗪𝗮𝗻𝘁 𝗧𝗼 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻𝗶𝘁𝗶𝗮𝗹 𝗜𝘀** **𝟭**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
@@ -78,7 +53,6 @@ async def upload(bot: Client, m: Message):
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
     await input1.delete(True)
-    
 
     await editable.edit("**𝗘𝗡𝗧𝗘𝗥 𝗥𝗘𝗦𝗢𝗟𝗨𝗧𝗜𝗢𝗡📸**\n𝟭𝟰𝟰,𝟮𝟰𝟬,𝟯𝟲𝟬,𝟰𝟴𝟬,𝟳𝟮𝟬,𝟭𝟬𝟴𝟬 𝗽𝗹𝗲𝗮𝘀𝗲 𝗰𝗵𝗼𝗼𝘀𝗲 𝗾𝘂𝗮𝗹𝗶𝘁𝘆")
     input2: Message = await bot.listen(editable.chat.id)
@@ -101,41 +75,30 @@ async def upload(bot: Client, m: Message):
             res = "UN"
     except Exception:
             res = "UN"
-    
-    
 
     await editable.edit("𝗡𝗼𝘄 𝗘𝗻𝘁𝗲𝗿 𝗔 𝗖𝗮𝗽𝘁𝗶𝗼𝗻 𝗧𝗼 𝗔𝗱𝗱 𝗖𝗮𝗽𝘁𝗶𝗼𝗻 𝗢𝗻 𝗬𝗼𝘂𝗿 𝗨𝗽𝗹𝗼𝗮𝗱𝗲𝗱 𝗙𝗶𝗹𝗲\n\n𝗘𝗴 » THE BOYS")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
     await input3.delete(True)
-    highlighter  = f"️ ⁪⁬⁮⁮⁮"
-    if raw_text3 == 'Robin':
-        MR = highlighter 
-    else:
-        MR = raw_text3
-   
+
     await editable.edit("𝗡𝗼𝘄 𝗦𝗲𝗻𝗱 𝗧𝗵𝗲 𝗧𝗵𝘂𝗺𝗯 𝗨𝗿𝗹\n\n𝗢𝗿 𝗜𝗳 𝗗𝗼𝗻'𝘁 𝗪𝗮𝗻𝘁 𝗧𝗵𝘂𝗺𝗯𝗻𝗮𝗶𝗹 𝗦𝗲𝗻𝗱 = 𝗻𝗼")
-    input6 = message = await bot.listen(editable.chat.id)
+    input6 = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
     await input6.delete(True)
     await editable.delete()
 
     thumb = input6.text
     if thumb.startswith("http://") or thumb.startswith("https://"):
-        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
+        os.system(f"wget '{thumb}' -O 'thumb.jpg'")
         thumb = "thumb.jpg"
     else:
-        thumb == "no"
+        thumb = "no"
 
-    if len(links) == 1:
-        count = 1
-    else:
-        count = int(raw_text)
+    count = int(raw_text) if len(links) > 1 else 1
 
     try:
         for i in range(count - 1, len(links)):
-
-            V = links[i][1].replace("file/d/","uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing","") # .replace("mpd","m3u8")
+            V = links[i][1].replace("file/d/", "uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing", "")
             url = "https://" + V
 
             if "visionias" in url:
@@ -145,21 +108,7 @@ async def upload(bot: Client, m: Message):
                         url = re.search(r"(https://.*?playlist.m3u8.*?)\"", text).group(1)
 
             elif 'videos.classplusapp' in url:
-             url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9'}).json()['url']
-
-            
-            elif '/utkarshapp.mpd' in url:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-             id =  url.split("/")[-2]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-             url =  "https://apps-s3-prod.utkarshapp.com/" + id + "/utkarshapp.com"
-           elif '/appx/gyanbinduapi.classx.co.in' in url:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-             id =  url.split("/")[-2]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-             url =  "https://madxapi-hehe-767ca189990f.herokuapp.com/" + id + "/appx/gyanbinduapi.classx.co.in"
-            elif '/master.mpd' in url:
-             id =  url.splitelif '/master.mpd' in url:
-             id =  url.split("/")[-2]
-             url =  'https://madxapi-hehe-767ca189990f.herokuapp.com/" + id + "/master.m3u8??token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzgzMjk2NTIuNTAyLCJkYXRhIjp7Il9pZCI6IjY2NTM1YmIxNGE1YjZhN2NiM2EwMzAzYiIsInVzZXJuYW1lIjoiOTUwODYwNTI1OSIsImZpcnN0TmFtZSI6IkFiaGlzaGVrIiwibGFzdE5hbWUiOiJUaGFrdXIiLCJvcmdhbml6YXRpb24iOnsiX2lkIjoiNWViMzkzZWU5NWZhYjc0NjhhNzlkMTg5Iiwid2Vic2l0ZSI6InBoeXNpY3N3YWxsYWguY29tIiwibmFtZSI6IlBoeXNpY3N3YWxsYWgifSwiZW1haWwiOiJhYmhpc2hlazcyNTQ4NUBnbWFpbC5jb20iLCJyb2xlcyI6WyI1YjI3YmQ5NjU4NDJmOTUwYTc3OGM2ZWYiXSwiY291bnRyeUdyb3VwIjoiSU4iLCJ0eXBlIjoiVVNFUiJ9LCJpYXQiOjE3Mzc3MjQ4NTJ9.mRWT-khhl7Y-cxRdgaoX4mdXRegaU0KbTX9wxhuw0oQ' 
-("/")[-2]
-             url =  'https://madxapi-hehe-767ca189990f.herokuapp.com/" + id + "/master.m3u8??token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzgzMjk2NTIuNTAyLCJkYXRhIjp7Il9pZCI6IjY2NTM1YmIxNGE1YjZhN2NiM2EwMzAzYiIsInVzZXJuYW1lIjoiOTUwODYwNTI1OSIsImZpcnN0TmFtZSI6IkFiaGlzaGVrIiwibGFzdE5hbWUiOiJUaGFrdXIiLCJvcmdhbml6YXRpb24iOnsiX2lkIjoiNWViMzkzZWU5NWZhYjc0NjhhNzlkMTg5Iiwid2Vic2l0ZSI6InBoeXNpY3N3YWxsYWguY29tIiwibmFtZSI6IlBoeXNpY3N3YWxsYWgifSwiZW1haWwiOiJhYmhpc2hlazcyNTQ4NUBnbWFpbC5jb20iLCJyb2xlcyI6WyI1YjI3YmQ5NjU4NDJmOTUwYTc3OGM2ZWYiXSwiY291bnRyeUdyb3VwIjoiSU4iLCJ0eXBlIjoiVVNFUiJ9LCJpYXQiOjE3Mzc3MjQ4NTJ9.mRWT-khhl7Y-cxRdgaoX4mdXRegaU0KbTX9wxhuw0oQ' 
+                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9'}).json()['url']
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
             name = f'{str(count).zfill(3)}) {name1[:60]}'
@@ -171,32 +120,26 @@ async def upload(bot: Client, m: Message):
 
             if "jw-prod" in url:
                 cmd = f'yt-dlp -o "{name}.mp4" "{url}"'
-           
-            if "apps-s3-jw-prod.utkarshapp" in url:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-                cmd = f'yt-dlp -o "{name}.mp4" "{url}"'      
-       
-            elif "webvideos.classplusapp." in url:
-               cmd = f'yt-dlp --add-header "referer:https://web.classplusapp.com/" --add-header "x-cdn-tag:empty" -f "{ytf}" "{url}" -o "{name}.mp4"'
-            
+            elif "webvideos.classplusapp" in url:
+                cmd = f'yt-dlp --add-header "referer:https://web.classplusapp.com/" --add-header "x-cdn-tag:empty" -f "{ytf}" "{url}" -o "{name}.mp4"'
             else:
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
-            try:  
-                
-                cc = f'**[📽️] 𝗩𝗶𝗱_𝗜𝗗 :** {str(count).zfill(3)}.**\n\n**❤️‍🔥𝗧𝗶𝘁𝗹𝗲** » {𝗻𝗮𝗺𝗲𝟭}.THE BOYS.mkv**\n\n\n**📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲** » **{raw_text0}**\n\n\n**📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆** » **{raw_text3}**' 
-                cc1 = f'**[📁] 𝗣𝗱𝗳_𝗜𝗗 :** {str(count).zfill(3)}.**\n\n**💗𝗧𝗶𝘁𝗹𝗲** » {𝗻𝗮𝗺𝗲𝟭}.THE BOYS.pdf**\n\n\n**📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲** » **{raw_text0}**\n\n\n**📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆** » **{raw_text3}**'
+            try:
+                cc = f'**[📽️] 𝗩𝗶𝗱_𝗜𝗗 :** {str(count).zfill(3)}.\n\n**❤️‍🔥𝗧𝗶𝘁𝗹𝗲** » {name1}.THE BOYS.mkv\n\n\n**📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲** » **{raw_text0}**\n\n\n**📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆** » **{raw_text3}**'
+                cc1 = f'**[📁] 𝗣𝗱𝗳_𝗜𝗗 :** {str(count).zfill(3)}.\n\n**💗𝗧𝗶𝘁𝗹𝗲** » {name1}.THE BOYS.pdf\n\n\n**📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲** » **{raw_text0}**\n\n\n**📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆** » **{raw_text3}**'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
-                        copy = await bot.send_document(chat_id=m.chat.id,document=ka, caption=cc1)
-                        count+=1
+                        copy = await bot.send_document(chat_id=m.chat.id, document=ka, caption=cc1)
+                        count += 1
                         os.remove(ka)
                         time.sleep(1)
                     except FloodWait as e:
                         await m.reply_text(str(e))
-                        time.sleep(e.x) 
+                        time.sleep(e.x)
                         continue
-                
+
                 elif ".pdf" in url:
                     try:
                         cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
@@ -220,14 +163,11 @@ async def upload(bot: Client, m: Message):
                     time.sleep(1)
 
             except Exception as e:
-                await m.reply_text(
-                    f"**downloading Interupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`"
-                )
+                await m.reply_text(f"**downloading Interrupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`")
                 continue
 
     except Exception as e:
         await m.reply_text(e)
     await m.reply_text("**😎✅𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗗𝗼𝗻𝗲✅😎 Mission complete**")
-
 
 bot.run()
