@@ -1,30 +1,48 @@
 import os
 import re
 import sys
+import json
 import time
+import asyncio
 import requests
+import subprocess
+
+import core as helper
+from utils import progress_bar
+from vars import API_ID, API_HASH, BOT_TOKEN
 from aiohttp import ClientSession
+from pyromod import listen
+from subprocess import getstatusoutput
+
 from pyrogram import Client, filters
 from pyrogram.types import Message
+from pyrogram.errors import FloodWait
+from pyrogram.errors.exceptions.bad_request_400 import StickerEmojiInvalid
+from pyrogram.types.messages_and_media import message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-API_ID = 'your_api_id'
-API_HASH = 'your_api_hash'
-BOT_TOKEN = 'your_bot_token'
 
-bot = Client("bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+bot = Client(
+    "bot",
+    api_id=API_ID,
+    api_hash=API_HASH,
+    bot_token=BOT_TOKEN)
+
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
-    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n➨ I am Txt to Video Uploader Bot.\n\n➨ Bot Made By THE BOY\n\n➨ For Use Me Send /BOYS Command.\n\n➨ And Follow Few Steps.\n\n➨ Use /stop Command For Stopping Ongoing Process.</b>")
+    await m.reply_text(f"<b>Hello {m.from_user.mention} 👋\n\n➨ I am Txt to Video Uploader Bot.\n\n➨ Bot Made By THE BOY\n\n➨ For Use Me Send /BOYS Command.\n\n➨ And Follow Few Steps.\n\n➨ Use /stop Command For Stopping Ongoing Procces.</b>")
+
 
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
     await m.reply_text("**BAND**💗", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
+
 @bot.on_message(filters.command(["BOYS"]))
 async def upload(bot: Client, m: Message):
-    editable = await m.reply_text('𝗦𝗘𝗡𝗗 𝗧𝗫𝗧')
+    editable = await m.reply_text('SEND TXT')
     input: Message = await bot.listen(editable.chat.id)
     x = await input.download()
     await input.delete(True)
@@ -40,21 +58,21 @@ async def upload(bot: Client, m: Message):
             links.append(i.split("://", 1))
         os.remove(x)
     except:
-        await m.reply_text("**👩‍🎓𝗜𝗻𝘃𝗮𝗹𝗶𝗱 𝗳𝗶𝗹𝗲 𝗶𝗻𝗽𝘂𝘁.**")
+        await m.reply_text("**👩🎓INVALID FILE INPUT.**")
         os.remove(x)
         return
 
-    await editable.edit(f"**𝗧𝗼𝘁𝗮𝗹 𝗟𝗶𝗻𝗸𝘀 𝗙𝗼𝘂𝗻𝗱 𝗔𝗿𝗲🔗🔗** **{len(links)}**\n\n**𝗦𝗲𝗻𝗱 𝗙𝗿𝗼𝗺 𝗪𝗵𝗲𝗿𝗲 𝗬𝗼𝘂 𝗪𝗮𝗻𝘁 𝗧𝗼 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝗻𝗶𝘁𝗶𝗮𝗹 𝗜𝘀** **𝟭**")
+    await editable.edit(f"**TOTAL LINKS FOUND ARE** **{len(links)}**\n\n**SEND FROM WHERE YOU WANT TO DOWNLOAD INITIAL IS** **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
     await input0.delete(True)
 
-    await editable.edit("**𝗡𝗼𝘄 𝗣𝗹𝗲𝗮𝘀𝗲 𝗦𝗲𝗻𝗱 𝗠𝗲 𝗬𝗼𝘂𝗿 𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲**")
+    await editable.edit("**NOW PLEASE SEND YOUR BATCH NAME**")
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
     await input1.delete(True)
 
-    await editable.edit("**𝗘𝗡𝗧𝗘𝗥 𝗥𝗘𝗦𝗢𝗟𝗨𝗧𝗜𝗢𝗡📸**\n𝟭𝟰𝟰,𝟮𝟰𝟬,𝟯𝟲𝟬,𝟰𝟴𝟬,𝟳𝟮𝟬,𝟭𝟬𝟴𝟬 𝗽𝗹𝗲𝗮𝘀𝗲 𝗰𝗵𝗼𝗼𝘀𝗲 𝗾𝘂𝗮𝗹𝗶𝘁𝘆")
+    await editable.edit("**ENTER RESOLUTION📸**\n144,240,360,480,720,1080 please choose quality")
     input2: Message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
     await input2.delete(True)
@@ -70,31 +88,39 @@ async def upload(bot: Client, m: Message):
         elif raw_text2 == "720":
             res = "1280x720"
         elif raw_text2 == "1080":
-            res = "1920x1080" 
-        else: 
+            res = "1920x1080"
+        else:
             res = "UN"
     except Exception:
-            res = "UN"
+        res = "UN"
 
-    await editable.edit("𝗡𝗼𝘄 𝗘𝗻𝘁𝗲𝗿 𝗔 𝗖𝗮𝗽𝘁𝗶𝗼𝗻 𝗧𝗼 𝗔𝗱𝗱 𝗖𝗮𝗽𝘁𝗶𝗼𝗻 𝗢𝗻 𝗬𝗼𝘂𝗿 𝗨𝗽𝗹𝗼𝗮𝗱𝗲𝗱 𝗙𝗶𝗹𝗲\n\n𝗘𝗴 » THE BOYS")
+    await editable.edit("NOW ENTER A CAPTION TO ADD CAPTION ON YOUR UPLOADED FILE\n\nEG » THE BOYS")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
     await input3.delete(True)
+    highlighter = "️ ⁪⁬⁮⁮⁮"
+    if raw_text3 == 'Robin':
+        MR = highlighter
+    else:
+        MR = raw_text3
 
-    await editable.edit("𝗡𝗼𝘄 𝗦𝗲𝗻𝗱 𝗧𝗵𝗲 𝗧𝗵𝘂𝗺𝗯 𝗨𝗿𝗹\n\n𝗢𝗿 𝗜𝗳 𝗗𝗼𝗻'𝘁 𝗪𝗮𝗻𝘁 𝗧𝗵𝘂𝗺𝗯𝗻𝗮𝗶𝗹 𝗦𝗲𝗻𝗱 = 𝗻𝗼")
-    input6 = await bot.listen(editable.chat.id)
+    await editable.edit("NOW SEND THE THUMB URL\n\nOR IF DON'T WANT THUMBNAIL SEND = no")
+    input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
     await input6.delete(True)
     await editable.delete()
 
     thumb = input6.text
     if thumb.startswith("http://") or thumb.startswith("https://"):
-        os.system(f"wget '{thumb}' -O 'thumb.jpg'")
+        getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
         thumb = "thumb.jpg"
     else:
         thumb = "no"
 
-    count = int(raw_text) if len(links) > 1 else 1
+    if len(links) == 1:
+        count = 1
+    else:
+        count = int(raw_text)
 
     try:
         for i in range(count - 1, len(links)):
@@ -103,12 +129,29 @@ async def upload(bot: Client, m: Message):
 
             if "visionias" in url:
                 async with ClientSession() as session:
-                    async with session.get(url, headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language': 'en-US,en;q=0.9', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'Pragma': 'no-cache', 'Referer': 'http://www.visionias.in/', 'Sec-Fetch-Dest': 'iframe', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Site': 'cross-site', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 12; RMX2121) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36', 'sec-ch-ua': '"Chromium";v="107", "Not=A?Brand";v="24"', 'sec-ch-ua-mobile': '?1', 'sec-ch-ua-platform': '"Android"',}) as resp:
+                    async with session.get(url, headers={
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                        'Accept-Language': 'en-US,en;q=0.9',
+                        'Cache-Control': 'no-cache',
+                        'Connection': 'keep-alive',
+                        'Pragma': 'no-cache',
+                        'Referer': 'http://www.visionias.in/',
+                        'Sec-Fetch-Dest': 'iframe',
+                        'Sec-Fetch-Mode': 'navigate',
+                        'Sec-Fetch-Site': 'cross-site',
+                        'Upgrade-Insecure-Requests': '1',
+                        'User-Agent': 'Mozilla/5.0 (Linux; Android 12; RMX2121) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36',
+                        'sec-ch-ua': '"Chromium";v="107", "Not=A?Brand";v="24"',
+                        'sec-ch-ua-mobile': '?1',
+                        'sec-ch-ua-platform': '"Android"',
+                    }) as resp:
                         text = await resp.text()
                         url = re.search(r"(https://.*?playlist.m3u8.*?)\"", text).group(1)
 
             elif 'videos.classplusapp' in url:
-                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9'}).json()['url']
+                url = requests.get(f'https://api.classplusapp.com/cams/uploader/video/jw-signed-url?url={url}', headers={
+                    'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9'
+                }).json()['url']
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
             name = f'{str(count).zfill(3)}) {name1[:60]}'
@@ -120,14 +163,17 @@ async def upload(bot: Client, m: Message):
 
             if "jw-prod" in url:
                 cmd = f'yt-dlp -o "{name}.mp4" "{url}"'
-            elif "webvideos.classplusapp" in url:
+
+            elif "webvideos.classplusapp." in url:
                 cmd = f'yt-dlp --add-header "referer:https://web.classplusapp.com/" --add-header "x-cdn-tag:empty" -f "{ytf}" "{url}" -o "{name}.mp4"'
+
             else:
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                cc = f'**[📽️] 𝗩𝗶𝗱_𝗜𝗗 :** {str(count).zfill(3)}.\n\n**❤️‍🔥𝗧𝗶𝘁𝗹𝗲** » {name1}.THE BOYS.mkv\n\n\n**📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲** » **{raw_text0}**\n\n\n**📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆** » **{raw_text3}**'
-                cc1 = f'**[📁] 𝗣𝗱𝗳_𝗜𝗗 :** {str(count).zfill(3)}.\n\n**💗𝗧𝗶𝘁𝗹𝗲** » {name1}.THE BOYS.pdf\n\n\n**📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲** » **{raw_text0}**\n\n\n**📥 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆** » **{raw_text3}**'
+                cc = f'**[📽️] VID_ID :** {str(count).zfill(3)}.\n\n**💗TITLE** » {name}.THE BOYS.mkv\n\n**📚BATCH NAME** » **{raw_text0}**\n\n**📥 DOWNLOADED BY** » **{raw_text3}**'
+                cc1 = f'**[📁] PDF_ID :** {str(count).zfill(3)}.\n\n**💗TITLE** » {name}.THE BOYS.pdf\n\n**📚BATCH NAME** » **{raw_text0}**\n\n**📥 DOWNLOADED BY** » **{raw_text3}**'
+
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -153,7 +199,7 @@ async def upload(bot: Client, m: Message):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = f"**⬇️𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐈𝐍𝐆⬇️... »**\n\n**📝Name »**`{name}\n\n❄Quality » {raw_text2}`\n\n**🔗URL »** `{url}`"
+                    Show = f"**⬇️DOWNLOADING... »**\n\n**📝Name »** `{name}`\n\n**❄Quality » {raw_text2}`\n\n**🔗URL »** `{url}`"
                     prog = await m.reply_text(Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
@@ -163,11 +209,14 @@ async def upload(bot: Client, m: Message):
                     time.sleep(1)
 
             except Exception as e:
-                await m.reply_text(f"**downloading Interrupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`")
+                await m.reply_text(
+                    f"**downloading Interrupted **\n{str(e)}\n**Name** » {name}\n**Link** » `{url}`"
+                )
                 continue
 
     except Exception as e:
-        await m.reply_text(e)
-    await m.reply_text("**😎✅𝗦𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆 𝗗𝗼𝗻𝗲✅😎 Mission complete**")
+        await m.reply_text(str(e))
+    await m.reply_text("**😎✅Successfully Done✅😎 Mission complete**")
+
 
 bot.run()
